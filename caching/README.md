@@ -1,6 +1,6 @@
 # Caching - Holberton School
 
-Welcome to the **Caching** project repository! This project is part of the **Holberton School Full-Stack** curriculum, focusing on the implementation of various caching strategies using Python.
+Welcome to the **Caching** project repository. This project is part of the **Holberton School Full-Stack** curriculum and focuses on implementing various caching strategies using Python.
 
 ---
 
@@ -14,14 +14,14 @@ Welcome to the **Caching** project repository! This project is part of the **Hol
 
 ## Description
 
-This project introduces **caching systems** and explores how different **cache replacement algorithms** work. A caching system is a mechanism that stores data temporarily to serve future requests faster and reduce computational cost. The main challenge in caching is **what to keep** and **what to discard** when space is limited.
+This project introduces fundamental concepts of **caching systems** and explores multiple **cache replacement algorithms**. A caching system temporarily stores data to serve future requests more efficiently and reduce computational cost. One of the main challenges lies in determining **what to keep** and **what to discard** when storage is limited.
 
-Throughout this project, multiple cache strategies are implemented:
+Several cache strategies are implemented in this project:
 
-- **Basic** dictionary-based cache without size limitations.
-- Replacement policies such as **FIFO**, **LIFO**, **LRU**, **MRU**, and **LFU**.
+- A basic dictionary-based cache without size limitations
+- Replacement policies including **FIFO**, **LIFO**, **LRU**, **MRU**, and **LFU**
 
-All caching classes inherit from a common parent: `BaseCaching`, which provides a standard interface and storage dictionary.
+All caching classes inherit from a common base: `BaseCaching`, which provides a shared storage dictionary and interface.
 
 ---
 
@@ -29,35 +29,36 @@ All caching classes inherit from a common parent: `BaseCaching`, which provides 
 
 The `caching` directory includes the following files:
 
-| File               | Description                                                                                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `0-basic_cache.py` | Implements a basic dictionary-based caching system with no size limitation. The `put()` method adds a key-value pair, while `get()` retrieves a value. |
-| `1-fifo_cache.py`  | Implements the **FIFO** (First-In First-Out) cache replacement policy. When the cache exceeds `MAX_ITEMS`, the oldest added item is discarded.         |
-| `2-lifo_cache.py`  | LIFOCache class that implements LIFO caching system, discarding the last item when cache exceeds MAX_ITEMS                                             |
-| `3-lru_cache.py`   | LRU cache (Least Recently Used): discards the least recently used item using `OrderedDict` to track access order.                                      |
-| `4-mru_cache.py`   | Implements a cache system using the Most Recently Used (MRU) replacement policy. Inherits from `BaseCaching`.                                          |
+| File               | Description                                                                                                                                             |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `0-basic_cache.py` | Implements a basic dictionary-based caching system with no size limit. The `put()` method adds a key-value pair; `get()` retrieves a value.             |
+| `1-fifo_cache.py`  | Implements the FIFO (First-In First-Out) replacement policy. When the cache exceeds `MAX_ITEMS`, the oldest added item is discarded.                   |
+| `2-lifo_cache.py`  | Implements the LIFO (Last-In First-Out) replacement policy. Discards the most recently added item when the cache exceeds `MAX_ITEMS`.                   |
+| `3-lru_cache.py`   | Implements the LRU (Least Recently Used) replacement policy using `OrderedDict` to track access order and evict the least recently accessed item.       |
+| `4-mru_cache.py`   | Implements the MRU (Most Recently Used) replacement policy. Discards the most recently accessed item when the cache exceeds `MAX_ITEMS`.                |
+| `100-lfu_cache.py` | Implements the LFU (Least Frequently Used) replacement policy. Tracks item frequency and evicts the least used one; breaks ties using LRU strategy.     |
 
 ---
 
 ## Learning Objectives
 
-By the end of this project, the following concepts should be understood and applied:
+The following concepts are covered in the scope of this project:
 
-- What a **caching system** is and its purpose.
-- The pros and cons of different **cache replacement policies**:
-  - **FIFO** (First In First Out)
-  - **LIFO** (Last In First Out)
+- Definition and purpose of **caching systems**
+- Comparison of various **cache replacement strategies**, including:
+  - **FIFO** (First-In First-Out)
+  - **LIFO** (Last-In First-Out)
   - **LRU** (Least Recently Used)
   - **MRU** (Most Recently Used)
   - **LFU** (Least Frequently Used)
-- Limitations and trade-offs in cache design.
-- How to create clean, documented, and testable Python code that adheres to `pycodestyle` standards.
-- Writing Python classes with proper inheritance, method overriding, and clear docstrings.
+- Design considerations, limitations, and trade-offs in cache systems
+- Clean and testable Python code following `pycodestyle` guidelines
+- Implementation of class inheritance, method overriding, and documentation
 
-All Python files follow strict requirements, including:
+All Python files are designed with the following specifications:
 
-- Python 3.9 compatibility
-- Executable scripts with shebangs
-- Fully documented modules, classes, and functions
+- Compatible with Python 3.9  
+- Include executable script headers (`#!/usr/bin/python3`)  
+- Contain module, class, and method docstrings  
 
 ---
