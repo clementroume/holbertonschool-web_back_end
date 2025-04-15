@@ -34,6 +34,7 @@ The `caching` directory includes the following files:
 | `0-basic_cache.py` | Implements a basic dictionary-based caching system with no size limitation. The `put()` method adds a key-value pair, while `get()` retrieves a value. |
 | `1-fifo_cache.py`  | Implements the **FIFO** (First-In First-Out) cache replacement policy. When the cache exceeds `MAX_ITEMS`, the oldest added item is discarded.         |
 | `2-lifo_cache.py`  | LIFOCache class that implements LIFO caching system, discarding the last item when cache exceeds MAX_ITEMS                                             |
+| `3-lru_cache.py`   | LRU cache (Least Recently Used): discards the least recently used item using `OrderedDict` to track access order.                                      |
 
 ---
 
