@@ -35,6 +35,8 @@ The `personal_data` directory includes the following files:
 | 1    | `filtered_logger.py` | Defines `RedactingFormatter`, a custom log formatter that filters sensitive fields dynamically using `filter_datum()`.                            |
 | 2    | `filtered_logger.py` | Adds `get_logger()` to configure and return a logger named `"user_data"` with a `RedactingFormatter`. Defines `PII_FIELDS` with 5 sensitive keys. |
 | 3    | `filtered_logger.py` | Implements `get_db()` to securely connect to a MySQL database using credentials stored in environment variables. Returns a `MySQLConnection`.     |
+| 4     | filtered_logger.py   | Defines a `main()` function to connect to the database, retrieve all users, and log filtered user data using `RedactingFormatter`. |
+| 5     | encrypt_password.py  | Implements `hash_password(password)` to return a salted bcrypt hash of the given password. |
 
 ---
 
