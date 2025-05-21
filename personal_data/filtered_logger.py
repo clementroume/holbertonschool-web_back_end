@@ -10,8 +10,20 @@ from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """
+    Formatter for log records that redacts sensitive fields.
+
+    This class extends the default `logging.Formatter` to automatically
+    obfuscate sensitive information in log messages before they are output.
+    It uses a custom `filter_datum` function to replace specified fields
+    with a redaction string.
+
+    Attributes:
+        REDACTION (str): The string used to replace sensitive data.
+        FORMAT (str): The log message format.
+        SEPARATOR (str): Character used to separate fields in the log message.
+        fields (List[str]): List of field names to redact from log messages.
+    """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -19,23 +31,27 @@ class RedactingFormatter(logging.Formatter):
 
     def __init__(self, fields: List[str]):
         """
-        Initialize the formatter with fields to redact.
+        Initialize a RedactingFormatter instance.
 
         Args:
-            fields (List[str]): fields to be obfuscated in logs.
+            fields (List[str]): A list of field names whose values
+                                should be redacted from the log message.
         """
         super().__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
         """
-        Format the log record, obfuscating sensitive data.
+        Format the specified log record, redacting sensitive fields.
+
+        This method modifies the log record message by replacing the values
+        of specified fields with the redaction string before formatting.
 
         Args:
-            record (logging.LogRecord): log record to format.
+            record (logging.LogRecord): The log record to be formatted.
 
         Returns:
-            str: formatted log message with sensitive fields redacted.
+            str: The formatted and redacted log message.
         """
         record.msg = filter_datum(
             self.fields, self.REDACTION, record.msg, self.SEPARATOR)
