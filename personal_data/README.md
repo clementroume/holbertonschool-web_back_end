@@ -31,8 +31,9 @@ This project was designed and reviewed by **Emmanuel Turlay**, Staff Software E
 
 The `personal_data` directory includes the following files:
 
-|File|Description|
-|---|---|
+| File                 | Description                                                                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `filtered_logger.py` | Implements `filter_datum()`, a function that uses regular expressions to obfuscate sensitive fields in log messages based on a field list. |
 
 ---
 
