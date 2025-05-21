@@ -19,7 +19,6 @@ def filter_datum(fields, redaction, message, separator):
         str: The log message with sensitive fields obfuscated.
     """
     for field in fields:
-        # Build a regex pattern for each field
         pattern = fr'{field}=.*?(?={separator})'
         message = re.sub(pattern, f'{field}={redaction}', message)
     return message
