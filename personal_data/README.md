@@ -23,17 +23,18 @@ Key topics include:
 - Using environment variables to securely store credentials
 - Following Python conventions for clean, documented, and type-annotated code
 
-This project was designed and reviewed by **Emmanuel Turlay**, Staff Software Engineer at Cruise.
-
 ---
 
 ## Project Structure
 
 The `personal_data` directory includes the following files:
 
-| File                 | Description                                                                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `filtered_logger.py` | Implements `filter_datum()`, a function that uses regular expressions to obfuscate sensitive fields in log messages based on a field list. |
+| Step | File                 | Description                                                                                                                                       |
+| ---- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | `filtered_logger.py` | Implements `filter_datum()` to obfuscate PII fields in log messages using regex.                                                                  |
+| 1    | `filtered_logger.py` | Defines `RedactingFormatter`, a custom log formatter that filters sensitive fields dynamically using `filter_datum()`.                            |
+| 2    | `filtered_logger.py` | Adds `get_logger()` to configure and return a logger named `"user_data"` with a `RedactingFormatter`. Defines `PII_FIELDS` with 5 sensitive keys. |
+|      |                      |                                                                                                                                                   |
 
 ---
 
