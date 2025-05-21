@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+""" filtered_logger module
+"""
 import re
 
 
