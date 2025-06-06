@@ -8,20 +8,32 @@ class Auth:
     """Authentication class for API v1."""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Check if the path requires authentication."""
-        if path is None or not excluded_paths:
+        """Check if the path requires authentication.
+        
+        This method now supports wildcards (*) at the end of excluded paths.
+        """
+        if path is None:
+            return True
+        if excluded_paths is None or not excluded_paths:
             return True
 
-        # Normalize paths by ensuring they end with a slash
-        if not path.endswith('/'):
-            path += '/'
+        # Ensure path has a trailing slash for consistent matching
+        normalized_path = path if path.endswith('/') else path + '/'
 
-        # Normalize excluded paths by ensuring they end with a slash
-        excluded_paths = [p if p.endswith('/') else
-                          p + '/' for p in excluded_paths]
+        for excluded_path in excluded_paths:
+            # If the excluded path ends with a wildcard
+            if excluded_path.endswith('*'):
+                # Get the prefix by removing the wildcard
+                prefix = excluded_path[:-1]
+                # Check if the request path starts with this prefix
+                if path.startswith(prefix):
+                    return False  # Authentication not required
+            # Otherwise, use exact matching with normalized paths
+            elif normalized_path == excluded_path:
+                return False  # Authentication not required
 
-        return not any(path.startswith(excluded_path) for excluded_path
-                       in excluded_paths)
+        # If no match was found in the loop, authentication is required
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Return the Authorization header from the request."""
