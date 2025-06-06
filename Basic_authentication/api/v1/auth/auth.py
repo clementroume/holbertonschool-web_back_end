@@ -9,7 +9,7 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Check if the path requires authentication.
-        
+
         This method now supports wildcards (*) at the end of excluded paths.
         """
         if path is None:
