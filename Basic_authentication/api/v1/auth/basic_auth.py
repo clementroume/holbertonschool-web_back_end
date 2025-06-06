@@ -7,10 +7,10 @@ import base64
 
 class BasicAuth(Auth):
     """Basic Authentication class.
-
     This class inherits from Auth and will be used for handling
     HTTP Basic Authentication.
     """
+
     def extract_base64_authorization_header(
         self, authorization_header: str
     ) -> str:
@@ -49,3 +49,23 @@ class BasicAuth(Auth):
             )
         except Exception:
             return None
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str
+            ) -> (str, str):
+        """Extracts user credentials from the decoded
+        Base64 Authorization header.
+
+        Args:
+            decoded_base64_authorization_header (str):
+            The decoded Base64 header.
+
+        Returns:
+            tuple: A tuple containing the username and
+            password, or (None, None) if not valid.
+        """
+        if not isinstance(decoded_base64_authorization_header, str):
+            return None, None
+        if ':' not in decoded_base64_authorization_header:
+            return None, None
+        return tuple(decoded_base64_authorization_header.split(':', 1))
