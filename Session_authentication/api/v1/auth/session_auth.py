@@ -40,3 +40,19 @@ class SessionAuth(Auth):
         if session_id is None or not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
+    
+    def current_user(self, request=None):
+        """Retrieves the current user based on the session ID.
+
+        Args:
+            request: The request object.
+
+        Returns:
+            User: The user object, or None if not found.
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        if user_id is None:
+            return None
+        from models.user import User
+        return User.get(user_id)
