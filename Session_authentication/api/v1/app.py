@@ -65,12 +65,6 @@ def before_request_handler():
     if not auth.require_auth(request.path, excluded_paths):
         return
 
-    if auth.authorization_header(request) is None:
-        abort(401)
-
-    if auth.current_user(request) is None:
-        abort(403)
-
     if (
         auth.authorization_header(request) is None and
         auth.session_cookie(request) is None
@@ -79,6 +73,9 @@ def before_request_handler():
 
     request.current_user = auth.current_user(request)
 
+    if auth.current_user(request) is None:
+        abort(403)
+   
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
