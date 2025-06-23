@@ -54,7 +54,7 @@ class BasicAuth(Auth):
 
     def extract_user_credentials(
             self, decoded_base64_authorization_header: str
-            ) -> (str, str):
+    ) -> (str, str):
         """Extracts user credentials from the decoded
         Base64 Authorization header.
 
