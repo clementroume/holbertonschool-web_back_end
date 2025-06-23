@@ -1,42 +1,57 @@
-# Simple API
+# Session Authentication - Holberton School
 
-Simple HTTP API for playing with `User` model.
+Welcome to the **Session Authentication** project repository. This project is part of the **Holberton School Full-Stack**curriculum and focuses on building a session-based authentication mechanism using Python and Flask.
 
+---
 
-## Files
+## Table of Contents
 
-### `models/`
+- [Description](#description)
+- [Project Structure](#project-structure)
+- [Learning Objectives](#learning-objectives)
 
-- `base.py`: base of all models of the API - handle serialization to file
-- `user.py`: user model
+---
 
-### `api/v1`
+## Description
 
-- `app.py`: entry point of the API
-- `views/index.py`: basic endpoints of the API: `/status` and `/stats`
-- `views/users.py`: all users endpoints
+This project aims to build a complete session authentication system from scratch, building upon the concepts of a basic authentication mechanism. It explores how to manage user state across multiple requests by using session IDs stored in cookies. This project simulates real-world scenarios where persistent authentication is necessary to protect API endpoints.
 
+Key topics include:
 
-## Setup
+- Building a flexible authentication system that can be switched via environment variables.
+- Using cookies to manage user sessions.
+- Creating, retrieving, and destroying session IDs.
+- Implementing session expiration to enhance security.
+- Persisting sessions by storing them in a database.
 
-```
-$ pip3 install -r requirements.txt
-```
+---
 
+## Project Structure
 
-## Run
+The project evolves across several files to incrementally build the authentication system:
 
-```
-$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
-```
+| Step | File(s)                                                                               | Description                                                                                                                                          |
+| :--- | :------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | `api/v1/app.py api/v1/views/users.py`                                              | Updates the basic authentication to support a new `GET /api/v1/users/me` endpoint to retrieve the authenticated user.                                |
+| 1    | `api/v1/auth/session_auth.py api/v1/app.py`                                   | Creates an empty `SessionAuth`class and implements a mechanism to switch to this new authentication system via the `AUTH_TYPE` environment variable. |
+| 2    | `api/v1/auth/session_auth.py`                                                         | Implements `create_session` to generate a unique session ID (UUID) for a `user_id` and store it in an in-memory dictionary.                          |
+| 3    | `api/v1/auth/session_auth.py`                                                         | Implements `user_id_for_session_id` to retrieve a `user_id` from the in-memory stored session ID.                                                    |
+| 4    | `api/v1/auth/auth.py`                                                                 | Adds the `session_cookie`method to extract the session cookie value from an HTTP request.                                                            |
+| 5    | `api/v1/app.py`                                                                       | Updates the `before_request`handler to check for the presence of either an authorization header or a session cookie.                                 |
+| 6    | `api/v1/auth/session_auth.py`                                                         | Overloads the `current_user`method to identify and return a `User` instance based on the request's session cookie.                                   |
+| 7    | `api/v1/views/session_auth.py api/v1/views/__init__.py`                       | Creates a new `POST /api/v1/auth_session/login`view to handle user login, create a session, and set the response cookie.                             |
+| 8    | `api/v1/auth/session_auth.py api/v1/views/session_auth.py`                    | Implements the logout logic with `destroy_session` and exposes a `DELETE /api/v1/auth_session/logout`endpoint.                                       |
+| 9    | `api/v1/auth/session_exp_auth.py api/v1/app.py`                               | Creates `SessionExpAuth`inheriting from `SessionAuth` to add an expiration duration to sessions, configurable via `SESSION_DURATION`.                |
+| 10   | `models/user_session.py api/v1/auth/session_db_auth.py api/v1/app.py` | Implements `SessionDBAuth` to store session information in a database (file) to make them persistent.                                                |
 
+---
 
-## Routes
+## Learning Objectives
 
-- `GET /api/v1/status`: returns the status of the API
-- `GET /api/v1/stats`: returns some stats of the API
-- `GET /api/v1/users`: returns the list of users
-- `GET /api/v1/users/:id`: returns an user based on the ID
-- `DELETE /api/v1/users/:id`: deletes an user based on the ID
-- `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
-- `PUT /api/v1/users/:id`: updates an user based on the ID (JSON parameters: `last_name` and `first_name`)
+By the end of this project, you should be able to explain without the help of Google:
+
+- What authentication means.
+- What session authentication means.
+- What Cookies are and how they work.
+- How to send Cookies in an HTTP response.
+- How to parse Cookies from an HTTP request.
