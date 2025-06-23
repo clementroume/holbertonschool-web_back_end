@@ -36,13 +36,13 @@ class SessionExpAuth(SessionAuth):
     def user_id_for_session_id(self, session_id=None):
         """Retrieve the user ID for a session ID, considering expiration."""
 
-        if not session_id or session_id not in self.user_id_by_session_id:
+        if session_id is None or session_id not in self.user_id_by_session_id:
             return None
 
         session_data = self.user_id_by_session_id.get(session_id)
 
         if self.session_duration <= 0 or session_data is None:
-            return None
+            return session_data.get('user_id')
 
         created_at = session_data.get('created_at')
         if created_at is None:
