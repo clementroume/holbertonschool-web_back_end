@@ -50,3 +50,20 @@ class DB:
         if user is None:
             raise NoResultFound("No user found with the given attributes")
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user by user_id with given attributes
+        """
+        session = self._session
+
+        user = self.find_user_by(id=user_id)
+
+        if not user:
+            raise NoResultFound("No user found with the given user_id")
+
+        for key, value in kwargs.items():
+            if key not in User.__table__.columns.keys():
+                raise ValueError(f"Invalid attribute: {key}")
+            setattr(user, key, value)
+
+        session.commit()
