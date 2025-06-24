@@ -4,6 +4,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -39,3 +40,13 @@ class DB:
         session.refresh(new_user)
 
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Find a user by given attributes
+        """
+        session = self._session
+        user = session.query(User).filter_by(**kwargs).first()
+
+        if user is None:
+            raise NoResultFound("No user found with the given attributes")
+        return user
