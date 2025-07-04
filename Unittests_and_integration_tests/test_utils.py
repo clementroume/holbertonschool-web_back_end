@@ -59,6 +59,7 @@ class TestMemoize(unittest.TestCase):
     def test_memoize(self):
         """Tests that memoize caches the result of a method."""
         class TestClass:
+            """A test class with a memoized property."""
 
             def a_method(self):
                 """A method that returns a constant value."""
@@ -66,15 +67,18 @@ class TestMemoize(unittest.TestCase):
 
             @memoize
             def a_property(self):
-                """Returns the value of a_method."""
+                """
+                A property that is memoized. It calls a_method to get its value
+                but should only do so on the first access.
+                """
                 return self.a_method()
 
         with patch.object(
             TestClass, 'a_method', return_value=42
         ) as mock_method:
             instance = TestClass()
-            first_call = instance.a_property()
-            second_call = instance.a_property()
-            self.assertEqual(first_call, 42)
-            self.assertEqual(second_call, 42)
+            first_call_result = instance.a_property
+            second_call_result = instance.a_property
+            self.assertEqual(first_call_result, 42)
+            self.assertEqual(second_call_result, 42)
             mock_method.assert_called_once()
