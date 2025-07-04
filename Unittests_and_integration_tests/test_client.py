@@ -98,8 +98,10 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Test public_repos without a license filter."""
         client = GithubOrgClient(self.org_payload["login"])
         self.assertEqual(client.public_repos(), self.expected_repos)
+        self.mock.assert_called()
 
     def test_public_repos_with_license(self):
         """Test public_repos with a license filter."""
         client = GithubOrgClient(self.org_payload["login"])
         self.assertEqual(client.public_repos("apache-2.0"), self.apache2_repos)
+        self.mock.assert_called()
