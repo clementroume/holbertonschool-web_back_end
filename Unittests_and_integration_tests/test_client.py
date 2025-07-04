@@ -51,7 +51,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.return_value = test_payload
 
         client_instance = GithubOrgClient("test")
-        repos = client_instance._public_repos_url
+        repos = client_instance.public_repos
 
         self.assertEqual(repos, ["repo1", "repo2"])
 
