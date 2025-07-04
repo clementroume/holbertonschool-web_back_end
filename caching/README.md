@@ -55,10 +55,4 @@ The following concepts are covered in the scope of this project:
 - Clean and testable Python code following `pycodestyle` guidelines
 - Implementation of class inheritance, method overriding, and documentation
 
-All Python files are designed with the following specifications:
-
-- Compatible with Python 3.9  
-- Include executable script headers (`#!/usr/bin/python3`)  
-- Contain module, class, and method docstrings  
-
 ---

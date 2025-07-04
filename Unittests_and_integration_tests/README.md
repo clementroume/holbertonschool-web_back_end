@@ -36,8 +36,6 @@ The project is organized around the following files:
 |`test_utils.py`|Contains the unit tests for the `utils.py` module. It tests the `access_nested_map` function (including exception handling), `get_json` by mocking HTTP calls, and the `memoize` decorator.|
 |`test_client.py`|Contains the unit and integration tests for the `client.py` module. This file tests the `GithubOrgClient` class, using method and property patching, parameterization, and setting up full integration tests with fixtures.|
 
-Exporter vers Sheets
-
 ---
 
 ## Learning Objectives
