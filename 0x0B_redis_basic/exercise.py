@@ -25,6 +25,35 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method: Callable) -> Callable:
+    """
+    Decorator to store the history of inputs and
+    outputs for a particular function.
+    """
+    inputs_key = f"{method.__qualname__}:inputs"
+    outputs_key = f"{method.__qualname__}:outputs"
+
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """
+        Wrapper function that stores the input arguments and the output
+        of the original method in Redis lists.
+        """
+        # Store the input arguments
+        self._redis.rpush(inputs_key, str(args))
+
+        # Execute the wrapped function to get the output
+        output = method(self, *args, **kwargs)
+
+        # Store the output
+        self._redis.rpush(outputs_key, output)
+
+        # Return the output
+        return output
+
+    return wrapper
+
+
 class Cache:
     """Cache class to handle Redis operations."""
 
@@ -34,6 +63,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store data in Redis and return the key."""
         key = str(uuid.uuid4())
