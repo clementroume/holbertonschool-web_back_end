@@ -12,9 +12,7 @@ describe('sendPaymentRequestToApi', function () {
   // Test case to verify the usage of Utils.calculateNumber
   it('should call Utils.calculateNumber with correct arguments and log the correct message', function () {
     // Stub the Utils.calculateNumber method to always return 10
-    const calculateNumberStub = sinon
-      .stub(Utils, 'calculateNumber')
-      .returns(10);
+    const calculateNumberStub = sinon.stub(Utils, 'calculateNumber').returns(10);
     // Spy on console.log to monitor its calls
     const consoleLogSpy = sinon.spy(console, 'log');
 
