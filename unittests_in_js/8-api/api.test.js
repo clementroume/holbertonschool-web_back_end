@@ -2,7 +2,6 @@
 const request = require('request');
 // Import the 'expect' function from 'chai'
 const { expect } = require('chai');
-const { response } = require('./api');
 
 // Describe the test suite for the Index page
 describe('Index page', function () {
